@@ -1,0 +1,12 @@
+flask
+flask_sqlalchemy
+flask_cors
+flask_jwt_extended
+werkzeug
+celery
+redis
+python-dotenv
+flask-mail
+xhtml2pdf
+weasyprint
+apscheduler
