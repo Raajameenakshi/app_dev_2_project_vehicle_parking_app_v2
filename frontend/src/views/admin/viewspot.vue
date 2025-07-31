@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <AdminHeader />
   <div class="container px-4 py-6">
     <h2 class="text-2xl font-bold mb-4">Spot ID: {{ spot?.id }}</h2>
     <div class="mb-4">
@@ -37,12 +39,14 @@
       ← Back to Lot
     </router-link>
   </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/axios'
+import AdminHeader from '@/components/adminheader.vue'
 
 const route = useRoute()
 const spotId = Number(route.params.id)
@@ -65,3 +69,103 @@ const markAvailable = async () => {
 
 onMounted(fetchSpot)
 </script>
+
+<style scoped>
+.container {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.text-red-600 {
+  color: #dc2626;
+}
+
+.text-green-600 {
+  color: #16a34a;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.text-blue-600:hover {
+  text-decoration: underline;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-gray-600:hover {
+  text-decoration: underline;
+}
+
+.bg-yellow-500 {
+  background-color: #eab308;
+}
+
+.bg-green-600 {
+  background-color: #16a34a;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.rounded {
+  border-radius: 0.375rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+</style>

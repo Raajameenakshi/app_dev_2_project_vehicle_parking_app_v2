@@ -82,7 +82,7 @@ export default defineComponent({
     const fetchLot = async () => {
       try {
         const response = await axios.get(`/admin/view-parking-lot/${lotId}`)
-        Object.assign(lot, response.data)
+        Object.assign(lot, response.data.lot)
       } catch (error) {
         console.error('Error loading lot:', error)
         alert('Could not load parking lot')

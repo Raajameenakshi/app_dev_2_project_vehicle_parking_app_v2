@@ -13,6 +13,7 @@
             <th>Vehicle No</th>
             <th>Start</th>
             <th>End</th>
+            <th>Duration</th>
             <th>Cost (₹)</th>
           </tr>
         </thead>
@@ -25,6 +26,7 @@
             <td>{{ record.vehicle_number }}</td>
             <td>{{ record.start }}</td>
             <td>{{ record.end }}</td>
+            <td>{{ computeDuration(record.start, record.end) }}</td>
             <td>{{ record.cost }}</td>
           </tr>
         </tbody>
@@ -59,6 +61,39 @@ onMounted(async () => {
     console.error('Failed to fetch bookings:', error)
   }
 })
+
+function computeDuration(start: string, end: string | null): string {
+  if (!end) return '--'
+
+  function parseDate(dateStr: string): Date {
+    // Expects: DD-MM-YYYY HH:mm
+    const [datePart, timePart] = dateStr.split(' ')
+    const [day, month, year] = datePart.split('-').map(Number)
+    const [hour, minute] = timePart.split(':').map(Number)
+    return new Date(year, month - 1, day, hour, minute)
+  }
+
+  const startDate = parseDate(start)
+  const endDate = parseDate(end)
+  const diffMs = endDate.getTime() - startDate.getTime()
+
+  if (diffMs <= 0) return '0s'
+
+  const seconds = Math.floor((diffMs / 1000) % 60)
+  const minutes = Math.floor((diffMs / (1000 * 60)) % 60)
+  const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24)
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+
+  const parts = []
+  if (days > 0) parts.push(`${days}d`)
+  if (hours > 0) parts.push(`${hours}h`)
+  if (minutes > 0) parts.push(`${minutes}m`)
+  if (seconds > 0 || parts.length === 0) parts.push(`${seconds}s`)
+
+  return parts.join(' ')
+}
+
+
 </script>
 
 <style scoped>

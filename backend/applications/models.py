@@ -7,13 +7,13 @@ db=SQLAlchemy()
 class Admin(db.Model):
     __tablename__ = "Admin"
     id = db.Column(db.Integer, autoincrement = True, primary_key=True)
-    username = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
 
 class User(db.Model):
     __tablename__ = "User"
     id = db.Column(db.Integer, autoincrement = True, primary_key = True )
-    username = db.Column(db.String(64), nullable = False, unique=True )
+    email = db.Column(db.String(64), nullable = False, unique=True )
     passhash =  db.Column(db.String(64), nullable = False )
     full_name = db.Column(db.String(128), nullable = False )
     address = db.Column(db.String(512), nullable = False )

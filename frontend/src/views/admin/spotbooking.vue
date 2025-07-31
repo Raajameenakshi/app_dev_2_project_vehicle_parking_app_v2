@@ -1,50 +1,55 @@
 <template>
-  <div class="container mt-5">
-    <h2 class="text-2xl font-bold mb-4">Booking Details for Spot {{ booking?.parking_spot.id }}</h2>
+  <div>
+    <AdminHeader />
+    <div class="container mt-5">
+      <h2 class="text-2xl font-bold mb-4">
+        Booking Details for Spot {{ booking?.parking_spot.id }}
+      </h2>
 
-    <table class="table-auto w-full border border-gray-300 mb-6 text-sm md:text-base">
-      <tbody v-if="booking && user">
-        <tr>
-          <th class="border px-4 py-2 text-left">Booking ID</th>
-          <td class="border px-4 py-2">{{ booking.id }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">User ID and Username</th>
-          <td class="border px-4 py-2">{{ booking.user_id }} - {{ user.full_name }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">Spot ID</th>
-          <td class="border px-4 py-2">{{ booking.parking_spot.id }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">Parking Lot ID</th>
-          <td class="border px-4 py-2">{{ booking.parking_spot.parking_lot_id }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">Vehicle Number</th>
-          <td class="border px-4 py-2">{{ booking.vehicle_number }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">Start Time</th>
-          <td class="border px-4 py-2">{{ formatTime(booking.start_time) }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">End Time</th>
-          <td class="border px-4 py-2">{{ formatTime(booking.end_time) }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2 text-left">Cost</th>
-          <td class="border px-4 py-2">₹{{ booking.cost }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="booking-table">
+        <tbody v-if="booking && user">
+          <tr>
+            <th>Booking ID</th>
+            <td>{{ booking.id }}</td>
+          </tr>
+          <tr>
+            <th>User ID and Username</th>
+            <td>{{ booking.user_id }} - {{ user.full_name }}</td>
+          </tr>
+          <tr>
+            <th>Spot ID</th>
+            <td>{{ booking.parking_spot.id }}</td>
+          </tr>
+          <tr>
+            <th>Parking Lot ID</th>
+            <td>{{ booking.parking_spot.parking_lot_id }}</td>
+          </tr>
+          <tr>
+            <th>Vehicle Number</th>
+            <td>{{ booking.vehicle_number }}</td>
+          </tr>
+          <tr>
+            <th>Start Time</th>
+            <td>{{ formatTime(booking.start_time) }}</td>
+          </tr>
+          <tr>
+            <th>End Time</th>
+            <td>{{ '—' }}</td>
+          </tr>
+          <tr>
+            <th>Cost</th>
+            <td>{{ booking.cost ? `₹${booking.cost}` : 'To be calculated' }}</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <router-link
-      :to="`/admin/spots/${spotId}`"
-      class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
-    >
-      Back to Spot
-    </router-link>
+      <router-link
+        :to="`/admin/spots/${spotId}`"
+        class="back-button"
+      >
+        ← Back to Spot
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -52,6 +57,7 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import axios from '@/axios'
 import { useRoute } from 'vue-router'
+import AdminHeader from '@/components/adminheader.vue' // Make sure path is correct
 
 interface Booking {
   id: number
@@ -74,6 +80,9 @@ interface User {
 
 export default defineComponent({
   name: 'BookingDetails',
+  components: {
+    AdminHeader
+  },
   setup() {
     const route = useRoute()
     const spotId = route.params.id as string
@@ -121,6 +130,45 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  max-width: 700px;
+  max-width: 800px;
+  padding: 2rem;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  text-align: left;
+  vertical-align: top;
+}
+
+.booking-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #6b7280; /* gray-500 */
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #4b5563; /* gray-600 */
 }
 </style>
