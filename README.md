@@ -52,6 +52,9 @@ Admins create and manage parking lots and spots. Users book a spot, release it w
 - **Parking_spot**: id, parking_lot_id (FK), is_booked, additional_info
 - **Booking**: id, user_id (FK), parking_spot_id (FK), vehicle_number, start_time, end_time, cost
 
+<img width="336" height="229" alt="Picture1" src="https://github.com/user-attachments/assets/bfd3014e-ef01-48b6-8c7a-01c32932f5e9" />
+
+
 ## API Overview
 
 | Group | Purpose | Example endpoints |
